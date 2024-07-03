@@ -67,7 +67,7 @@ def track_open():
             with open(data_file, 'w') as f:
                 json.dump(tracking_data, f)
 
-    return '', 204
+    return send_file('logo.jpg', mimetype='image/jpeg')
 
 
 @app.route('/track/click', methods=['GET'])
