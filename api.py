@@ -67,7 +67,7 @@ def track_open():
             with open(data_file, 'w') as f:
                 json.dump(tracking_data, f)
 
-    return send_file('logo.jpg', mimetype='image/jpeg')
+    return redirect(url_for('serve_logo'))
 
 
 @app.route('/track/click', methods=['GET'])
@@ -159,7 +159,11 @@ def get_tracking_data(campaign_id):
         return jsonify({'clicked_users': clicked_users},{'opened_users': opened_users})
     else:
         return '', 404 
-    
+
+
+@app.route('/logo.jpg')
+def serve_logo():
+    return send_from_directory(app.root_path, 'logo.jpg')
 
 if __name__ == '__main__':
    app.run(debug=True, port=5050)
