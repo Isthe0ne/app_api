@@ -6,7 +6,7 @@ import json
 
 app = Flask(__name__)
 
-SSL_CA = './etc/secrets/singlestore_bundle.pem'
+SSL_CA = '/etc/secrets/singlestore_bundle.pem'
 
 
 USERNAME = os.environ.get('USERNAME')
