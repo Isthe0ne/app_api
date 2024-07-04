@@ -17,7 +17,7 @@ DB = os.environ.get('DB')
 
 
 # Connect to the SingleStore database
-engine = create_engine(f'mysql+mysqldb://{USERNAME}:{PASSWORD}@{HOST}:{PORT}/{DB}?ssl_ca={SSL_CA}')
+engine = create_engine(f'mysql+mysqldb://{USERNAME}:{PASSWORD}@{HOST}/{DB}?ssl_ca={SSL_CA}')
 # Create the connection
 conn = engine.connect()
 
