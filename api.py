@@ -8,9 +8,9 @@ app = Flask(__name__)
 
 SSL_CA = './etc/secrets/singlestore_bundle.pem'
 
-
+os.environ.get('DB')
 # Connect to the SingleStore database
-engine = create_engine(f'mysql+mysqldb://{os.environ[USERNAME]}:{os.environ[PASSWORD]}@{os.environ[HOST]}:{os.environ[PORT]}/{os.environ[DB]}?ssl_ca=' + SSL_CA)
+engine = create_engine(f'mysql+mysqldb://{os.environ.get('USERNAME')}:{os.environ.get('PASSWORD')}@{os.environ.get('HOST')}:{os.environ.get('PORT')}/{os.environ.get('DB')}?ssl_ca=' + SSL_CA)
 # Create the connection
 conn = engine.connect()
 
