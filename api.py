@@ -1,5 +1,6 @@
 from flask import Flask, request, jsonify, send_from_directory, redirect
 from sqlalchemy import create_engine, text
+import os
 import datetime
 import json
 
@@ -9,7 +10,7 @@ SSL_CA = './etc/secrets/singlestore_bundle.pem'
 
 
 # Connect to the SingleStore database
-engine = create_engine(f'mysql+mysqldb://{USERNAME}:{PASSWORD}@{HOST}:{PORT}/{DB}?ssl_ca=' + SSL_CA)
+engine = create_engine(f'mysql+mysqldb://{os.environ[USERNAME]}:{os.environ[PASSWORD]}@{os.environ[HOST]}:{os.environ[PORT]}/{os.environ[DB]}?ssl_ca=' + SSL_CA)
 # Create the connection
 conn = engine.connect()
 
