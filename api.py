@@ -100,7 +100,7 @@ def track_click():
 
             conn.commit()
 
-    return '', 204
+    return redirect(f'https://site-0gun.onrender.com/{user_id}')
 
 
 # Track Phished
