@@ -1,4 +1,5 @@
 from twilio.rest import Client
+import os
 
 def send(exp, num, msg):
     # Twilio credentials
