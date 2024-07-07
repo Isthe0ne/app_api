@@ -5,6 +5,8 @@ from sqlalchemy import create_engine, text
 import datetime
 import json
 
+from script.send_sms import send
+
 app = Flask(__name__)
 
 # Use environment variables for configuration
