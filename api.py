@@ -133,14 +133,14 @@ def track_phished(value):
                 WHERE user_id = :user_id AND campaign_id = :campaign_id AND group_id = :group_id AND event_phished = TRUE
                 """), {"user_id": user_id, "campaign_id": campaign_id, "group_id": group_id}).fetchone()
 
-                if result is None:
-                    conn.execute(text("""
-                        UPDATE tracking_data_mail
-                        SET event_phished = TRUE, timestamp_phished = :timestamp
-                        WHERE user_id = :user_id AND campaign_id = :campaign_id AND group_id = :group_id
-                        """), {"timestamp": timestamp, "user_id": user_id, "campaign_id": campaign_id, "group_id": group_id})
-                else:
-                    print("exist!")
+            if result is None:
+                conn.execute(text("""
+                    UPDATE tracking_data_mail
+                    SET event_phished = TRUE, timestamp_phished = :timestamp
+                    WHERE user_id = :user_id AND campaign_id = :campaign_id AND group_id = :group_id
+                    """), {"timestamp": timestamp, "user_id": user_id, "campaign_id": campaign_id, "group_id": group_id})
+            else:
+                print("exist!")
                 
 
             conn.commit()
