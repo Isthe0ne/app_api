@@ -103,6 +103,53 @@ def track_click():
     return '', 204
 
 
+# Track Phished
+@app.route('/mail-phished/<value>', methods=['GET'])
+def track_phished(value):
+    data = request.args
+
+    # Validate input data
+    if not all(key in data for key in ['tracking_id', 'campaign_id', 'group_id', 'end_date', 'admin_id']):
+        return 'Missing input data', 400
+
+    try:
+        campaign_id = int(data['campaign_id'])
+        group_id = int(data['group_id'])
+        user_id = int(value)  # Using the value from the URL parameter
+    except ValueError:
+        return 'Invalid input data', 400
+
+    if campaign_id < 0 or group_id < 0 or user_id < 0:
+        return 'Invalid input data', 400
+
+    timestamp = str(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
+    end_date = str(datetime.datetime.strptime(data['end_date'], "%Y-%m-%d %H:%M:%S"))
+    admin_id = data['admin_id']
+
+    if timestamp <= end_date:
+        with db.engine.connect() as conn:
+            result = conn.execute(text("""
+                SELECT * FROM tracking_data_mail
+                WHERE user_id = :user_id AND campaign_id = :campaign_id AND group_id = :group_id AND event_phished = TRUE
+                """), {"user_id": user_id, "campaign_id": campaign_id, "group_id": group_id}).fetchone()
+
+                if result is None:
+                    conn.execute(text("""
+                        UPDATE tracking_data_mail
+                        SET event_phished = TRUE, timestamp_phished = :timestamp
+                        WHERE user_id = :user_id AND campaign_id = :campaign_id AND group_id = :group_id
+                        """), {"timestamp": timestamp, "user_id": user_id, "campaign_id": campaign_id, "group_id": group_id})
+                else:
+                    print("exist!")
+                
+
+            conn.commit()
+
+    return redirect(f'https://site-0gun.onrender.com/{user_id}')
+
+
+
+
 #Track for opens
 @app.route('/logo.jpg')
 def serve_logo():
@@ -158,6 +205,8 @@ def serve_logo():
             conn.commit()
 
     return send_from_directory(app.root_path, 'logo.jpg')
+
+
 
 
 #Get data from DB
