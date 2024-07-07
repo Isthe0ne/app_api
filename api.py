@@ -30,6 +30,7 @@ class TrackingDataMail(db.Model):
     timestamp_click = db.Column(db.DateTime)
     timestamp_phished = db.Column(db.DateTime)
     admin_id = db.Column(db.String(255), nullable=False)
+    end_date = db.Column(db.DateTime)
 
 
 class TrackingDataSMS (db.Model):
