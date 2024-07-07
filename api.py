@@ -1,5 +1,5 @@
 import os
-from flask import Flask, request, jsonify, send_from_directory
+from flask import Flask, request, jsonify, send_from_directory, redirect
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import create_engine, text
 import datetime
@@ -79,9 +79,9 @@ def track_click():
 
             if result is None:
                 conn.execute(text("""
-                INSERT INTO tracking_data_mail (user_id, campaign_id, group_id, event_click, timestamp_click, admin_id)
-                VALUES (:user_id, :campaign_id, :group_id, TRUE, :timestamp, :admin_id)
-                """), {"user_id": user_id, "campaign_id": campaign_id, "group_id": group_id, "timestamp": timestamp, "admin_id": admin_id})
+                INSERT INTO tracking_data_mail (user_id, campaign_id, group_id, event_click, timestamp_click, admin_id, end_date)
+                VALUES (:user_id, :campaign_id, :group_id, TRUE, :timestamp, :admin_id, :end_date)
+                """), {"user_id": user_id, "campaign_id": campaign_id, "group_id": group_id, "timestamp": timestamp, "admin_id": admin_id, "end_date": end_date})
             else:
 
                 result = conn.execute(text("""
@@ -183,9 +183,9 @@ def serve_logo():
 
             if result is None:
                 conn.execute(text("""
-                INSERT INTO tracking_data_mail (user_id, campaign_id, group_id, event_open, timestamp_open, admin_id)
-                VALUES (:user_id, :campaign_id, :group_id, TRUE, :timestamp, :admin_id)
-                """), {"user_id": user_id, "campaign_id": campaign_id, "group_id": group_id, "timestamp": timestamp, "admin_id": admin_id})
+                INSERT INTO tracking_data_mail (user_id, campaign_id, group_id, event_open, timestamp_open, admin_id, end_date)
+                VALUES (:user_id, :campaign_id, :group_id, TRUE, :timestamp, :admin_id, :end_date)
+                """), {"user_id": user_id, "campaign_id": campaign_id, "group_id": group_id, "timestamp": timestamp, "admin_id": admin_id}, "end_date": end_date)
             else:
                 result = conn.execute(text("""
                 SELECT * FROM tracking_data_mail
