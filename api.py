@@ -185,7 +185,7 @@ def serve_logo():
                 conn.execute(text("""
                 INSERT INTO tracking_data_mail (user_id, campaign_id, group_id, event_open, timestamp_open, admin_id, end_date)
                 VALUES (:user_id, :campaign_id, :group_id, TRUE, :timestamp, :admin_id, :end_date)
-                """), {"user_id": user_id, "campaign_id": campaign_id, "group_id": group_id, "timestamp": timestamp, "admin_id": admin_id}, "end_date": end_date)
+                """), {"user_id": user_id, "campaign_id": campaign_id, "group_id": group_id, "timestamp": timestamp, "admin_id": admin_id, "end_date": end_date})
             else:
                 result = conn.execute(text("""
                 SELECT * FROM tracking_data_mail
