@@ -217,6 +217,12 @@ def send_sms():
 
     # Print the received data
     for user in users:
+        # Check if user is a dictionary and has the expected keys
+        if not isinstance(user, dict) or not all(key in user for key in ['tracking_id', 'user_id', 'group_id', 'campaign_id', 'end_date', 'admin_unique_id', 'msg', 'phone']):
+            return jsonify({"error": "Invalid user data"}), 400
+
+    # Print the received data
+    for user in users:
         tracking_id = user["tracking_id"]
         user_id = user["user_id"]
         group_id = user["group_id"]
